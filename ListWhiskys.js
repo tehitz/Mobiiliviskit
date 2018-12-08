@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, Button, FlatList, Modal, View } from 'react-native';
+import { ScrollView, StyleSheet, Alert, Text, TextInput, Button, FlatList, Modal, View } from 'react-native';
 import * as firebase from 'firebase';
 
 const firebaseConfig = {
@@ -28,9 +28,11 @@ export default class ListWhiskys extends React.Component {
 	keyExtractor = (item) => item.id;
 
 	renderItem = ({item}) =>
-		<View >
-			<Text style={{fontSize: 20}}>{item.name}, {item.desc}, {item.date}</Text>
-		</View>;
+		<ScrollView style={{fontSize: 15, marginBottom: 20, justifyContent: 'center'}}>
+			<Text> Name: {item.name}</Text>
+			<Text> Description: {item.desc}</Text>
+			<Text> Price: {item.price}</Text>
+		</ScrollView>;
 
 	listenForItems(itemsRef) {
 		itemsRef.on('value', (snap) => {
@@ -39,7 +41,7 @@ export default class ListWhiskys extends React.Component {
 				items.push({
 					id: child.key,
 					desc: child.val().desc,
-					date: child.val().price,
+					price: child.val().price,
 					name: child.val().name
 				});
 			});
@@ -55,20 +57,23 @@ export default class ListWhiskys extends React.Component {
 
 	render() {
 		return(
-			<View>
-				<Text>All added whiskys</Text>
-				<View style= {{width: 300, height: 300, backgroundColor: 'white', alignItems: 'center'}}>
-					<Text>Whiskeys added</Text>
-					<FlatList
-						data = {this.state.whiskys}
-						keyExtractor = {this.keyExtractor}
-						renderItem = {this.renderItem}
-						style={{marginTop: 20}}
-					/>
+			<View style= {{flex: 1, backgroundColor: 'white', alignItems: 'center'}}>
+				<Text style = {{marginTop: 10,
+					marginBottom: 10,
+					fontFamily: 'Helvetica',
+					fontSize: 36,
+					fontWeight: 'bold',
+					textAlign: 'center'}}>Whiskys added</Text>
+				<View>
+					<View style={{flex:7}}>
+							<FlatList
+								data = {this.state.whiskys}
+								keyExtractor = {this.keyExtractor}
+								renderItem = {this.renderItem}
+							/>
+					</View>
 				</View>
 			</View>
-
 		);
 	}
-
 }

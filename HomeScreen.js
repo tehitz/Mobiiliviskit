@@ -26,15 +26,17 @@ export default class HomeScreen extends React.Component {
 		super(props);
 		this.itemsRef = firebaseApp.database().ref('whiskys');
 		this.state = {
-			name: '', desc: '', price: '', whiskys: [], modalVisible: false
+			name: '', desc: '', price: '', whiskys: [], modalVisible: false,
 		};
+
 	}
+
 
 	keyExtractor = (item) => item.id;
 
 	renderItem = ({item}) =>
 		<View >
-			<Text style={{fontSize: 20}}>{item.name}, {item.desc}, {item.date}</Text>
+			<Text style={{fontSize: 20}}>{item.name}, {item.desc}, {item.price}</Text>
 		</View>;
 
 
@@ -42,7 +44,6 @@ export default class HomeScreen extends React.Component {
 	saveData = () => {
 		if (this.state.desc != '' && this.state.price != '' && this.state.name != '') {
 			this.itemsRef.push({ desc: this.state.desc, price: this.state.price, name: this.state.name});
-			this.refs.show('Whisky saved');
 			this.setState({name: '', price: '', desc: '', modalVisible: false});
 		}
 		else {
@@ -50,26 +51,8 @@ export default class HomeScreen extends React.Component {
 		}
 	};
 
-	// List whiskys
-	/* listenForItems(itemsRef) {
-		itemsRef.on('value', (snap) => {
-			var items = [];
-			snap.forEach((child) => {
-				items.push({
-					id: child.key,
-					desc: child.val().desc,
-					date: child.val().price,
-					name: child.val().name
-				});
-			});
 
-			this.setState({whiskys: items});
-		});
-	}
 
-	componentDidMount() {
-		this.listenForItems(this.itemsRef);
-	} */
 
 	render() {
 		const {navigate} = this.props.navigation;
@@ -83,34 +66,26 @@ export default class HomeScreen extends React.Component {
 						borderWidth: 1, marginBottom: 7}}
 					onChangeText={(name) => this.setState({name})}
 					value={this.state.name}
-					placeholder="name"
+					placeholder="Name"
 				/>
 				<TextInput
 					style={{height: 40, width: 200, borderColor: 'gray',
 						borderWidth: 1, marginBottom: 7}}
 					onChangeText={(desc) => this.setState({desc})}
 					value={this.state.desc}
-					placeholder="description"
+					placeholder="Description"
 				/>
 				<TextInput
 					style={{height: 40, width: 200, borderColor: 'gray',
 						borderWidth: 1, marginBottom: 7}}
 					onChangeText={(price) => this.setState({price})}
 					value={this.state.price}
-					placeholder="price"
+					placeholder="Price"
 				/>
 				<Button color="red" title="Save a whiskey" onPress={this.saveData}
 				/>
-				<View style= {{width: 300, height: 300, backgroundColor: 'white', alignItems: 'center'}}>
-					<Text>Whiskeys added</Text>
-					<FlatList
-						data = {this.state.whiskys}
-						keyExtractor = {this.keyExtractor}
-						renderItem = {this.renderItem}
-						style={{marginTop: 20}}
-					/>
-				</View>
 			</View>
+
 		);
 	}
 }
