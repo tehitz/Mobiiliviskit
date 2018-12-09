@@ -45,9 +45,10 @@ export default class HomeScreen extends React.Component {
 		if (this.state.desc != '' && this.state.price != '' && this.state.name != '' && this.state.rating != '') {
 			this.itemsRef.push({ desc: this.state.desc, price: this.state.price, name: this.state.name, rating: this.state.rating});
 			this.setState({name: '', price: '', desc: '', modalVisible: false, rating: ''});
+			alert('Whisky added successfully!')
 		}
 		else {
-			this.refs.show('Some data is missing');
+			alert('Incorrect input!')
 		}
 	};
 
