@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, Button, FlatList, Modal, View } from 'react-native';
+import { StyleSheet, Text, TextInput, Button, FlatList, Modal, View, Image } from 'react-native';
 import * as firebase from 'firebase';
 import ListWhiskys from './ListWhiskys';
 
@@ -60,6 +60,10 @@ export default class HomeScreen extends React.Component {
 
 		return (
 			<View style={{alignItems: 'center', margin: 'auto', justifyContent: 'center', flex: 1}} >
+				<Image
+					style={{width: 75, height: 150, marginBottom: 20}}
+					source={{uri: 'https://www.totalwine.com/media/sys_master/twmmedia/h51/hcb/8806500663326.png'}}
+				/>
 				<Text style={{fontSize: 20}}>Add a new whisky</Text>
 
 				<TextInput

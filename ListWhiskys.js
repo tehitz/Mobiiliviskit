@@ -18,7 +18,7 @@ if (!firebase.apps.length) {
 
 
 export default class ListWhiskys extends React.Component {
-	static navigationOptions = {title: 'Listed whiskys'}
+	static navigationOptions = {title: 'Listed whiskies'}
 	constructor(props) {
 		super(props);
 		this.itemsRef = firebaseApp.database().ref('whiskys');
@@ -72,12 +72,12 @@ export default class ListWhiskys extends React.Component {
 	render() {
 		return(
 			<View style= {{backgroundColor: 'white', paddingBottom: 10, flex: 1}}>
-				<Text style = {{marginTop: 10,
+				<Text style = {{marginTop: 40,
 					marginBottom: 10,
 					fontFamily: 'Helvetica',
 					fontSize: 36,
 					fontWeight: 'bold',
-					textAlign: 'center'}}>Whiskys added</Text>
+					textAlign: 'center'}}>Whiskies added</Text>
 							<FlatList style={{width: window.width}}
 								data = {this.state.whiskys}
 								keyExtractor = {this.keyExtractor}
