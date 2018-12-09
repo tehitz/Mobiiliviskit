@@ -10,8 +10,8 @@ export default class Info extends React.Component {
 
 	render() {
 		return(
-			<View>
-				<Text>To be updated.</Text>
+			<View styles={{alignItems: 'center', margin: 'auto'}}>
+				<Text styles={{fontSize: 20}}>This is a whiskey listing app.</Text>
 			</View>
 
 		);

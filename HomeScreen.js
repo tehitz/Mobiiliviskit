@@ -26,7 +26,7 @@ export default class HomeScreen extends React.Component {
 		super(props);
 		this.itemsRef = firebaseApp.database().ref('whiskys');
 		this.state = {
-			name: '', desc: '', price: '', whiskys: [], modalVisible: false,
+			name: '', desc: '', price: '', rating: '', whiskys: [], modalVisible: false,
 		};
 
 	}
@@ -42,9 +42,9 @@ export default class HomeScreen extends React.Component {
 
 
 	saveData = () => {
-		if (this.state.desc != '' && this.state.price != '' && this.state.name != '') {
-			this.itemsRef.push({ desc: this.state.desc, price: this.state.price, name: this.state.name});
-			this.setState({name: '', price: '', desc: '', modalVisible: false});
+		if (this.state.desc != '' && this.state.price != '' && this.state.name != '' && this.state.rating != '') {
+			this.itemsRef.push({ desc: this.state.desc, price: this.state.price, name: this.state.name, rating: this.state.rating});
+			this.setState({name: '', price: '', desc: '', modalVisible: false, rating: ''});
 		}
 		else {
 			this.refs.show('Some data is missing');
@@ -75,13 +75,21 @@ export default class HomeScreen extends React.Component {
 					value={this.state.desc}
 					placeholder="Description"
 				/>
-				<TextInput
+				<TextInput keyboardType={'numeric'}
 					style={{height: 40, width: 200, borderColor: 'gray',
 						borderWidth: 1, marginBottom: 7}}
 					onChangeText={(price) => this.setState({price})}
 					value={this.state.price}
 					placeholder="Price"
 				/>
+				<TextInput keyboardType={'numeric'}
+					style={{height: 40, width: 200, borderColor: 'gray',
+						borderWidth: 1, marginBottom: 7}}
+					onChangeText={(rating) => this.setState({rating})}
+					value={this.state.rating}
+					placeholder="Rating out of 5"
+				/>
+
 				<Button color="red" title="Save a whiskey" onPress={this.saveData}
 				/>
 			</View>

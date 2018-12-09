@@ -21,18 +21,28 @@ export default class ListWhiskys extends React.Component {
 		super(props);
 		this.itemsRef = firebaseApp.database().ref('whiskys');
 		this.state = {
-			name: '', desc: '', price: '', whiskys: [], modalVisible: false
+			name: '', desc: '', price: '', whiskys: [], modalVisible: false, rating: ''
 		};
 	}
 
 	keyExtractor = (item) => item.id;
 
+	handleRemove(id) {
+		return firebase.database().ref('whiskys').child(id).remove();
+	}
+
 	renderItem = ({item}) =>
+		<View>
 		<ScrollView style={{fontSize: 15, marginBottom: 20, justifyContent: 'center'}}>
 			<Text> Name: {item.name}</Text>
 			<Text> Description: {item.desc}</Text>
 			<Text> Price: {item.price}</Text>
-		</ScrollView>;
+			<Text> Rating: {item.rating}/5</Text>
+			<Button onPress={() => this.handleRemove(item.id)} title="Delete"/>
+		</ScrollView>
+		<View styles={{marginTop: 100}}/>
+		</View>;
+
 
 	listenForItems(itemsRef) {
 		itemsRef.on('value', (snap) => {
@@ -42,7 +52,8 @@ export default class ListWhiskys extends React.Component {
 					id: child.key,
 					desc: child.val().desc,
 					price: child.val().price,
-					name: child.val().name
+					name: child.val().name,
+					rating: child.val().rating,
 				});
 			});
 
@@ -57,22 +68,20 @@ export default class ListWhiskys extends React.Component {
 
 	render() {
 		return(
-			<View style= {{flex: 1, backgroundColor: 'white', alignItems: 'center'}}>
+			<View style= {{backgroundColor: 'white', alignItems: 'center'}}>
 				<Text style = {{marginTop: 10,
 					marginBottom: 10,
 					fontFamily: 'Helvetica',
 					fontSize: 36,
 					fontWeight: 'bold',
 					textAlign: 'center'}}>Whiskys added</Text>
-				<View>
-					<View style={{flex:7}}>
+					<View styles={{marginBottom: 100}}>
 							<FlatList
 								data = {this.state.whiskys}
 								keyExtractor = {this.keyExtractor}
 								renderItem = {this.renderItem}
 							/>
 					</View>
-				</View>
 			</View>
 		);
 	}
